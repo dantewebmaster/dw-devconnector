@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import axios from 'axios';
 
 class Register extends Component {
 	state = {
@@ -23,7 +24,9 @@ class Register extends Component {
 			password2: password2,
 		};
 
-		console.log(newUser);
+		axios.post('/api/users/register', newUser)
+			.then(res => console.log(res.date))
+			.catch(err => console.log(err.response.data));
 	}
 
 	render() {
@@ -76,7 +79,7 @@ class Register extends Component {
 										onChange={this.onChange}
 									/>
 								</div>
-								<input type="submit" className="btn btn-info btn-block mt-4" />
+								<input type="submit" className="btn btn-large btn-info btn-block mt-4 font-weight-bold text-uppercase" />
 							</form>
 						</div>
 					</div>

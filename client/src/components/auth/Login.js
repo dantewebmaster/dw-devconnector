@@ -51,7 +51,7 @@ class Login extends Component {
 										onChange={this.onChange}
 									/>
 								</div>
-								<input type="submit" className="btn btn-info btn-block mt-4" />
+								<input type="submit" className="btn btn-large btn-info btn-block mt-4 font-weight-bold text-uppercase" />
 							</form>
 						</div>
 					</div>
