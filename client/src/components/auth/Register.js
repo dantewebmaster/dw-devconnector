@@ -1,33 +1,27 @@
 import React, { Component } from 'react'
 
 class Register extends Component {
-	constructor() {
-		super()
-		this.state = {
-			name: '',
-			email: '',
-			password: '',
-			password2: '',
-			errors: {},
-		};
-
-		this.onChange = this.onChange.bind(this);
-		this.onSubmit = this.onSubmit.bind(this);
-	}
-
-	onChange(event) {
-		this.setState({ [event.target.name]: event.target.value })
+	state = {
+		name: '',
+		email: '',
+		password: '',
+		password2: '',
+		errors: {},
 	};
 
-	onSubmit(event) {
-		event.preventDefault();
+	onChange = e => this.setState({ [e.target.name]: e.target.value });
+
+	onSubmit = e => {
+		e.preventDefault();
+
+		const { name, email, password, password2 } = this.state;
 
 		const newUser = {
-			name: this.state.name,
-			email: this.state.email,
-			password: this.state.password,
-			password2: this.state.password2,
-		}
+			name: name,
+			email: email,
+			password: password,
+			password2: password2,
+		};
 
 		console.log(newUser);
 	}

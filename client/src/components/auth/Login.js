@@ -1,27 +1,22 @@
 import React, { Component } from 'react'
 
 class Login extends Component {
-	constructor() {
-		super()
-		this.state = {
-			email: '',
-			password: '',
-			errors: {},
-		};
+	state = {
+		email: '',
+		password: '',
+		errors: {},
+	};
 
-		this.onChange = this.onChange.bind(this);
-		this.onSubmit = this.onSubmit.bind(this);
-	}
+	onChange = e => this.setState({ [e.target.name]: e.target.value });
 
-	onChange(event) {
-		this.setState({ [event.target.name]: event.target.value });
-	}
+	onSubmit = e => {
+		e.preventDefault();
 
-	onSubmit(event) {
-		event.preventDefault();
+		const { email, password } = this.state;
+
 		const user = {
-			email: this.state.email,
-			password: this.state.password,
+			email: email,
+			password: password,
 		};
 
 		console.log(user);
