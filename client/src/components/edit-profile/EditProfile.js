@@ -7,6 +7,8 @@ import TextareaFieldGroup from '../common/TextareaFieldGroup';
 import SelectListGroup from '../common/SelectListGroup';
 import InputGroup from '../common/InputGroup';
 
+import isEmpty from '../../validation/is-empty';
+
 import { createProfile, getCurrentProfile } from '../../actions/profileActions';
 
 class EditProfile extends Component {
@@ -33,10 +35,47 @@ class EditProfile extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		const { errors, profile: { profile } } = this.props;
+		const { errors } = this.props;
 
 		if (errors && errors !== prevProps.errors) {
 			this.setState({ errors })
+		}
+
+		if (this.props.profile.profile && this.props.profile.profile !== prevProps.profile.profile) {
+			const profile = this.props.profile.profile;
+
+			// Bring skills back to CSV
+			const skillsCSV = profile.skills.join(', ');
+
+			// If profile field does not exist, make empty string
+			profile.company = !isEmpty(profile.company) ? profile.company : '';
+			profile.website = !isEmpty(profile.website) ? profile.website : '';
+			profile.location = !isEmpty(profile.location) ? profile.location : '';
+			profile.githubusername = !isEmpty(profile.githubusername) ? profile.githubusername : '';
+			profile.bio = !isEmpty(profile.bio) ? profile.bio : '';
+			profile.social = !isEmpty(profile.social) ? profile.social : {};
+			profile.facebook = !isEmpty(profile.social.facebook) ? profile.social.facebook : '';
+			profile.twitter = !isEmpty(profile.social.twitter) ? profile.social.twitter : '';
+			profile.instagram = !isEmpty(profile.social.instagram) ? profile.social.instagram : '';
+			profile.linkedin = !isEmpty(profile.social.linkedin) ? profile.social.linkedin : '';
+			profile.youtube = !isEmpty(profile.social.youtube) ? profile.social.youtube : '';
+
+			// Set  component fields state
+			this.setState({
+				handle: profile.handle,
+				company: profile.company,
+				website: profile.website,
+				location: profile.location,
+				status: profile.status,
+				skills: skillsCSV,
+				githubusername: profile.githubusername,
+				bio: profile.bio,
+				facebook: profile.facebook,
+				twitter: profile.twitter,
+				instagram: profile.instagram,
+				linkedin: profile.linkedin,
+				youtube: profile.youtube,
+			});
 		}
 	}
 
