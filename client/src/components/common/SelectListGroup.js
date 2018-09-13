@@ -26,7 +26,7 @@ const SelectListGroup = ({
 				value={value}
 				onChange={onChange}
 				disabled={disabled}
-				className={classnames('form-control form-control-lg', {
+				className={classnames('custom-select custom-select-lg', {
 					'is-invalid': error
 				})}
 			>
