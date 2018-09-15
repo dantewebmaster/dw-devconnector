@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-
+import { Link, withRouter } from 'react-router-dom';
 import TextFieldGroup from '../common/TextFieldGroup';
 import TextareaFieldGroup from '../common/TextareaFieldGroup';
 import SelectListGroup from '../common/SelectListGroup';
@@ -174,6 +174,7 @@ class EditProfile extends Component {
 				<div className="container">
 					<div className="row">
 						<div className="col-md-8 m-auto">
+							<Link to="/dashboard" className="btn btn-light">Go Back</Link>
 							<h1 className="display-4 text-center">Edit Profile</h1>
 							<small className="d-block pb-3">* Required fields</small>
 
@@ -281,4 +282,4 @@ const mapStateToProps = state => ({
 	errors: state.errors,
 });
 
-export default connect(mapStateToProps, { createProfile, getCurrentProfile })(EditProfile);
+export default connect(mapStateToProps, { createProfile, getCurrentProfile })(withRouter(EditProfile));

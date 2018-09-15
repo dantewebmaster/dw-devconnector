@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 
 import jwt_decode from 'jwt-decode';
 import setAuthToken from './utils/setAuthToken';
@@ -25,6 +25,8 @@ import Dashboard from './components/dashboard/Dashboard';
 import CreateProfile from './components/create-profile/CreateProfile';
 import EditProfile from './components/edit-profile/EditProfile';
 import AddExperience from './components/add-credentials/AddExperience';
+import AddEducation from './components/add-credentials/AddEducation';
+import Profiles from './components/profiles/Profiles';
 
 // Styles
 import './App.css';
@@ -41,15 +43,16 @@ if (localStorage.jwtToken) {
   store.dispatch(setCurrentUser(decoded));
 
   // Check for expired token
-  const currentTime = Date.now / 1000;
+  const currentTime = Date.now() / 1000;
   if (decoded.exp < currentTime) {
+    const redirectToLogin = () => <Redirect to='/login' />;
     // Logout user
     store.dispatch(logoutUser());
     store.dispatch(clearCurrentProfile());
     // @TODO: Clear current profile
 
     // Redirect to login
-    window.location.href('/login');
+    redirectToLogin();
   }
 }
 
@@ -64,6 +67,7 @@ class App extends Component {
             <div className="container">
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
+              <Route exact path="/profiles" component={Profiles} />
               <Switch>
                 <PrivateRoute exact path="/dashboard" component={Dashboard} />
               </Switch>
@@ -75,6 +79,9 @@ class App extends Component {
               </Switch>
               <Switch>
                 <PrivateRoute exact path="/add-experience" component={AddExperience} />
+              </Switch>
+              <Switch>
+                <PrivateRoute exact path="/add-education" component={AddEducation} />
               </Switch>
             </div>
             <Footer />
