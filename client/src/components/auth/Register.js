@@ -78,6 +78,7 @@ class Register extends Component {
 									label="Password"
 									placeholder="Choose your password"
 									name="password"
+									type="password"
 									value={password}
 									error={errors.password}
 									onChange={this.onChange}
@@ -86,6 +87,7 @@ class Register extends Component {
 									label="Confirm password"
 									placeholder="Confirm your password"
 									name="password2"
+									type="password"
 									value={password2}
 									error={errors.password2}
 									onChange={this.onChange}

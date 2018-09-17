@@ -12,19 +12,14 @@ import { getProfileByHandle } from '../../actions/profileActions';
 class Profile extends Component {
 
 	componentDidMount() {
-		const { getProfileByHandle, match: { params: { handle } }, profile: { profile } } = this.props;
-		if (this.props.match.params.handle) {
-			getProfileByHandle(handle);
-		}
+		const { handle } = this.props.match.params;
+		handle && this.props.getProfileByHandle(handle)
 	}
 
-	// componentDidUpdate(prevProps) {
-	// 	const { profile: { profile }, loading } = this.props;
-
-	// 	if (profile === null && loading) {
-	// 		this.props.history.push('/not-found');
-	// 	}
-	// }
+	componentDidUpdate() {
+		this.props.profile.profile === null && !this.props.profile.loading
+			&& this.props.history.push('/not-found')
+	}
 
 	render() {
 		const { profile: { profile }, loading } = this.props;
@@ -63,7 +58,7 @@ class Profile extends Component {
 Profile.propTypes = {
 	profile: PropTypes.object.isRequired,
 	getProfileByHandle: PropTypes.func.isRequired,
-}
+};
 
 const mapStateToProps = state => ({
 	profile: state.profile,
