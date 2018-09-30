@@ -26,6 +26,8 @@ const styles = {
     flexGrow: 1,
   },
   title: {
+    fontSize: '18px',
+    fontWeight: '300',
     flexGrow: 1,
     textDecoration: 'none',
   },
@@ -35,6 +37,10 @@ const styles = {
   },
   leftIcon: {
     marginRight: '16px',
+  },
+  appBar: {
+    backgroundColor: 'transparent',
+    padding: 16,
   },
 };
 
@@ -101,14 +107,14 @@ class Navbar extends Component {
 
     return (
       <div className={classes.root}>
-        <AppBar position="static">
+        <AppBar position="fixed" className={classes.appBar} elevation={0}>
           <Toolbar>
             <Typography
               variant="title"
               color="inherit"
               className={classes.title}
-              component={Link}
-              to="/"
+            // component={Link}
+            // to="/"
             >
               DevConnector
             </Typography>
