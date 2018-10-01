@@ -13,7 +13,7 @@ import { Provider } from 'react-redux';
 import store from './store';
 
 // Layout
-import Navbar from './components/layout/Navbar';
+import Navbar from './components/layout/Navbar/Navbar';
 import Footer from './components/layout/Footer';
 import Landing from './components/layout/Landing';
 

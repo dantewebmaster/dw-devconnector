@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { logoutUser } from '../../actions/authActions';
-import { clearCurrentProfile } from '../../actions/profileActions';
+import { logoutUser } from '../../../actions/authActions';
+import { clearCurrentProfile } from '../../../actions/profileActions';
 
 // MU Components
 import AppBar from '@material-ui/core/AppBar';
@@ -21,28 +21,7 @@ import SettingsIcon from '@material-ui/icons/Settings';
 
 import { withStyles } from '@material-ui/core/styles';
 
-const styles = {
-  root: {
-    flexGrow: 1,
-  },
-  title: {
-    fontSize: '18px',
-    fontWeight: '300',
-    flexGrow: 1,
-    textDecoration: 'none',
-  },
-  avatar: {
-    marginRight: '8px',
-    marginLeft: '8px',
-  },
-  leftIcon: {
-    marginRight: '16px',
-  },
-  appBar: {
-    backgroundColor: 'transparent',
-    padding: 16,
-  },
-};
+import styles from './styles';
 
 class Navbar extends Component {
   state = {
