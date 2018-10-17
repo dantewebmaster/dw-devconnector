@@ -2,14 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Spinner from '../common/Spinner';
+import PageTemplate from '../layout/PageTemplate/PageTemplate';
 import ProfileItem from './ProfileItem';
-import Parallax from '../Parallax/Parallax';
 import { getProfiles } from '../../actions/profileActions';
 
-import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import { withStyles } from '@material-ui/core/styles';
-import PageTemplate from '../layout/PageTemplate/PageTemplate';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 class Profiles extends Component {
 
@@ -18,11 +16,11 @@ class Profiles extends Component {
   }
 
   render() {
-    const { classes, profile: { profiles }, loading } = this.props;
+    const { profile: { profiles }, loading } = this.props;
     let profileItems;
 
     if (profiles === null || loading) {
-      profileItems = <Spinner />;
+      profileItems = <LinearProgress />;
     } else {
       if (profiles.length > 0) {
         profileItems = profiles.map(profile => <ProfileItem key={profile._id} profile={profile} />)
@@ -33,13 +31,11 @@ class Profiles extends Component {
 
     return (
       <div className="profiles">
-        <PageTemplate pageTitle="Developer's" headerImage={'http://placehold.it/1200x500'}>
-          <h1>Developer Profiles</h1>
-          <p>Browse and connect with developers.</p>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo autem, aliquid sunt velit distinctio debitis mollitia quos voluptatibus modi dolorem itaque animi similique architecto at totam commodi voluptates! Quos, saepe!</p>
-          <h2>Lorem ipsium dolor sit amet</h2>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo autem, aliquid sunt velit distinctio debitis mollitia quos voluptatibus modi dolorem itaque animi similique architecto at totam commodi voluptates! Quos, saepe!</p>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo autem, aliquid sunt velit distinctio debitis mollitia quos voluptatibus modi dolorem itaque animi similique architecto at totam commodi voluptates! Quos, saepe!</p>
+        <PageTemplate pageTitle="Developer's" headerImage={'https://source.unsplash.com/1380x380/?code'}>
+          <Typography variant="h2" component="h1" gutterBottom>Developer Profiles</Typography>
+          <Typography variant="subtitle1" gutterBottom>
+            Browse and connect with developers around the entire World Wide Web.
+          </Typography>
           {profileItems}
         </PageTemplate>
       </div >
@@ -56,7 +52,4 @@ const mapStateToProps = state => ({
   profile: state.profile
 })
 
-export default connect(
-  mapStateToProps,
-  { getProfiles }
-)(Profiles);
+export default connect(mapStateToProps, { getProfiles })(Profiles);
