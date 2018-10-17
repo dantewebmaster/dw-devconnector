@@ -32,6 +32,8 @@ import NotFound from './components/not-found/NotFound';
 import Posts from './components/posts/Posts';
 import Post from './components/post/Post';
 
+import { withTheme } from '@material-ui/core/styles';
+
 // Styles
 import './App.css';
 
@@ -104,4 +106,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withTheme()(App);
