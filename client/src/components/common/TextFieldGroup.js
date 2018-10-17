@@ -1,55 +1,69 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
+
+import FormControl from '@material-ui/core/FormControl';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+
+import withStyles from '@material-ui/core/styles/withStyles';
+
+const styles = theme => ({
+  formControl: {
+    marginBottom: theme.spacing.unit * 4,
+  },
+});
 
 const TextFieldGroup = ({
-	name,
-	placeholder,
-	value,
-	label,
-	error,
-	info,
-	type,
-	onChange,
-	disabled,
+  name,
+  placeholder,
+  value,
+  label,
+  error,
+  info,
+  type,
+  onChange,
+  disabled,
+  classes,
 }) => {
-	return (
-		<div className="form-group">
-			{label &&
-				<label htmlFor={name}>{label}</label>}
-			<input
-				type={type}
-				placeholder={placeholder}
-				name={name}
-				value={value}
-				onChange={onChange}
-				disabled={disabled}
-				className={classnames('form-control form-control-lg', {
-					'is-invalid': error
-				})}
-			/>
-			{error &&
-				<div className="invalid-feedback">{error}</div>}
-			{info &&
-				<small className="form-text text-muted">{info}</small>}
-		</div>
-	)
+  return (
+    <FormControl
+      className={classes.formControl}
+      error={error}
+      aria-describedby="error"
+      fullWidth
+    >
+      {label ?
+        <InputLabel htmlFor={name}>{label}</InputLabel> :
+        <InputLabel htmlFor={name}>{placeholder}</InputLabel>}
+      <Input
+        type={type}
+        name={name}
+        id={name}
+        value={value}
+        onChange={onChange}
+        disabled={disabled}
+      />
+      {error && <FormHelperText id="error">{error}</FormHelperText>}
+      {info && <FormHelperText id="info">{info}</FormHelperText>}
+    </FormControl>
+  )
 }
 
 TextFieldGroup.propTypes = {
-	name: PropTypes.string.isRequired,
-	placeholder: PropTypes.string,
-	value: PropTypes.string.isRequired,
-	label: PropTypes.string,
-	error: PropTypes.string,
-	info: PropTypes.string,
-	type: PropTypes.string.isRequired,
-	onChange: PropTypes.func.isRequired,
-	disabled: PropTypes.bool,
+  name: PropTypes.string.isRequired,
+  placeholder: PropTypes.string,
+  value: PropTypes.string.isRequired,
+  label: PropTypes.string,
+  error: PropTypes.string,
+  info: PropTypes.string,
+  type: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  disabled: PropTypes.bool,
 }
 
 TextFieldGroup.defaultProps = {
-	type: 'text'
+  type: 'text'
 }
 
-export default TextFieldGroup;
+export default withStyles(styles)(TextFieldGroup);
