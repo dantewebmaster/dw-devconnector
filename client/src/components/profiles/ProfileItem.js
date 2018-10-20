@@ -46,12 +46,12 @@ export class ProfileItem extends Component {
       <React.Fragment>
         <Divider className={classes.divider} />
         <Grid container spacing={40}>
-          <Grid item xs={4}>
+          <Grid item xs={3}>
             <Avatar src={profile.user.avatar} alt={profile.user.name} className={classes.avatar} />
           </Grid>
-          <Grid item xs={8} className={classes.profileSummary}>
+          <Grid item xs={9} className={classes.profileSummary}>
             <div>
-              <Typography variant="h3" component="h2" gutterBottom>
+              <Typography variant="h4" component="h2" >
                 {profile.user.name}
               </Typography>
 
@@ -61,15 +61,13 @@ export class ProfileItem extends Component {
               <Typography variant="body1">
                 {isEmpty(profile.location) ? null : <span>{profile.location}</span>}
               </Typography>
-
             </div>
             <div className={classes.skillChips}>
               <Typography variant="subtitle2">Skills Set</Typography>
               {profile.skills.slice(0, 4).map((skill, index) => (
-                <Chip key={index} label={skill} variant="outlined" color="primary" className={classes.chip} />
+                <Chip key={index} label={skill} variant="outlined" color="secondary" className={classes.chip} />
               ))}
             </div>
-
             <Button variant="contained" color="primary" component={Link} to={`/profile/${profile.handle}`}>View Profile</Button>
           </Grid>
         </Grid>
