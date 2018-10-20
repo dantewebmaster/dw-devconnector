@@ -30,7 +30,7 @@ const PageTemplate = ({ classes, pageTitle, headerImage, children }) => {
   return (
     <div>
       <Parallax filter small image={headerImage}>
-        <Typography component="h1" variant="display2" className={classes.headerTitle}>
+        <Typography component="h1" variant="h2" className={classes.headerTitle}>
           {pageTitle}
         </Typography>
       </Parallax>
