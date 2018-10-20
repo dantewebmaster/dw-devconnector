@@ -50,30 +50,28 @@ class Navbar extends Component {
       <React.Fragment>
         <Button component={Link} to="/feed" color="inherit">Feed</Button>
         <Avatar alt={user.name} src={user.avatar} className={classes.avatar} />
-        <div>
-          <IconButton
-            color="inherit"
-            aria-label="User menu"
-            aria-owns={open ? 'user-menu' : null}
-            aria-haspopup="true"
-            onClick={this.onOpenUserMenu}
-          >
-            <MoreVertIcon />
-          </IconButton>
-          <Menu
-            id="user-menu"
-            anchorEl={anchorEl}
-            open={open}
-            onClose={this.handleClose}
-          >
-            <MenuItem onClick={this.onLogoutClick}>
-              <ExitToAppIcon className={classes.leftIcon} /> Sair
+        <IconButton
+          color="inherit"
+          aria-label="User menu"
+          aria-owns={open ? 'user-menu' : null}
+          aria-haspopup="true"
+          onClick={this.onOpenUserMenu}
+        >
+          <MoreVertIcon />
+        </IconButton>
+        <Menu
+          id="user-menu"
+          anchorEl={anchorEl}
+          open={open}
+          onClose={this.handleClose}
+        >
+          <MenuItem onClick={this.onLogoutClick}>
+            <ExitToAppIcon className={classes.leftIcon} /> Sair
             </MenuItem>
-            <MenuItem component={Link} to="/dashboard" onClick={this.handleClose}>
-              <SettingsIcon className={classes.leftIcon} /> Dashboard
+          <MenuItem component={Link} to="/dashboard" onClick={this.handleClose}>
+            <SettingsIcon className={classes.leftIcon} /> Dashboard
             </MenuItem>
-          </Menu>
-        </div>
+        </Menu>
       </React.Fragment>
     );
 
@@ -85,23 +83,23 @@ class Navbar extends Component {
     );
 
     return (
-      <div className={classes.root}>
-        <AppBar position="fixed" className={classes.appBar} elevation={0}>
-          <Toolbar>
-            <Typography
-              variant="title"
-              color="inherit"
-              className={classes.title}
-            // component={Link}
-            // to="/"
-            >
-              DevConnector
-            </Typography>
+      <AppBar position="fixed" className={classes.appBar} elevation={0}>
+        <Toolbar className={classes.toolBar}>
+          <Typography
+            variant="h5"
+            color="inherit"
+            className={classes.title}
+            component={Link}
+            to="/"
+          >
+            DevConnector
+          </Typography>
+          <div className={classes.menuLinks}>
             <Button component={Link} to="/profiles" color="inherit">Developpers</Button>
             {isAuthenticated ? authLinks : guestLinks}
-          </Toolbar>
-        </AppBar>
-      </div>
+          </div>
+        </Toolbar>
+      </AppBar>
     )
   }
 }

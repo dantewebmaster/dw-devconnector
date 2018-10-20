@@ -1,12 +1,22 @@
 const styles = {
-  root: {
-    flexGrow: 1,
+  appBar: {
+    backgroundColor: 'transparent',
+    padding: 16,
+  },
+  toolBar: {
+    display: 'flex',
+    justifyContent: 'space-between',
   },
   title: {
     fontSize: '18px',
     fontWeight: '300',
     flexGrow: 1,
     textDecoration: 'none',
+    maxWidth: '120px'
+  },
+  menuLinks: {
+    display: 'flex',
+    alignItems: 'center'
   },
   avatar: {
     marginRight: '8px',
@@ -14,10 +24,6 @@ const styles = {
   },
   leftIcon: {
     marginRight: '16px',
-  },
-  appBar: {
-    backgroundColor: 'transparent',
-    padding: 16,
   },
 };
 
