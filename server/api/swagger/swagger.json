@@ -1,0 +1,406 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "0.0.7",
+    "title": "Devconnector Server"
+  },
+  "basePath": "/api/v1",
+  "tags": [
+    {
+      "name": "Users",
+      "description": "Operations related to Users"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "parameters": {
+    "appToken": {
+      "name": "appToken",
+      "in": "header",
+      "description": "Application Token",
+      "required": true,
+      "type": "string"
+    },
+    "language": {
+      "name": "language",
+      "in": "header",
+      "description": "Language as defined by ISO-6391.",
+      "type": "string",
+      "required": false,
+      "default": "pt-BR"
+    },
+    "uuid": {
+      "name": "uuid",
+      "in": "path",
+      "description": "Entity unique identifier",
+      "type": "string",
+      "format": "uuid",
+      "required": true
+    },
+    "company": {
+      "name": "company",
+      "in": "header",
+      "description": "company code",
+      "type": "string"
+    },
+    "timeZone": {
+      "name": "timeZone",
+      "in": "header",
+      "description": "Time Zone as defined by UTC offset",
+      "required": false,
+      "type": "string",
+      "default": "America/Sao Paulo"
+    },
+    "userId": {
+      "name": "userId",
+      "in": "header",
+      "description": "Current User identifier",
+      "type": "string"
+    },
+    "postalCode": {
+      "name": "status",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "Postal code",
+      "default": ""
+    },
+    "role": {
+      "name": "role",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "Filter by Role of BusinessModel",
+      "default": ""
+    },
+    "_limit": {
+      "name": "_limit",
+      "in": "query",
+      "description": "Defines the limit of the returned list",
+      "type": "string",
+      "required": false,
+      "default": 200
+    },
+    "_offset": {
+      "name": "_offset",
+      "in": "query",
+      "description": "Current number of the pagination",
+      "type": "string",
+      "required": false,
+      "default": 0
+    }
+  },
+  "paths": {
+    "/users": {
+      "x-swagger-router-controller": "usersController",
+      "get": {
+        "summary": "Get list of Users.",
+        "description": ".",
+        "tags": [
+          "Users"
+        ],
+        "operationId": "getUsers",
+        "produces": [
+          "application/json"
+        ],
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/User"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/users/uuid/{uuid}": {
+      "x-swagger-router-controller": "usersController",
+      "get": {
+        "summary": "Get user by uid.",
+        "description": ".",
+        "tags": [
+          "Users"
+        ],
+        "operationId": "getByUid",
+        "produces": [
+          "application/json"
+        ],
+        "security": [],
+        "parameters": [
+          {
+            "$ref": "#/parameters/uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/UserInput"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Delete User.",
+        "description": ".",
+        "operationId": "deleteUser",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "security": [],
+        "parameters": [
+          {
+            "$ref": "#/parameters/uuid"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/swagger": {
+      "x-swagger-pipe": "swagger_raw"
+    }
+  },
+  "securityDefinitions": {
+    "appToken": {
+      "type": "apiKey",
+      "name": "appToken",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "user": {
+          "type": "object",
+          "properties": {
+            "userUid": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "firstName": {
+              "type": "string"
+            },
+            "lastName": {
+              "type": "string"
+            },
+            "address": {
+              "type": "string"
+            },
+            "city": {
+              "type": "string"
+            },
+            "lastUpdatedAt": {
+              "type": "string"
+            },
+            "createdAt": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "UserInput": {
+      "type": "object",
+      "properties": {
+        "user": {
+          "type": "object",
+          "properties": {
+            "userUid": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "firstName": {
+              "type": "string"
+            },
+            "lastName": {
+              "type": "string"
+            },
+            "address": {
+              "type": "string"
+            },
+            "city": {
+              "type": "string"
+            },
+            "lastUpdatedAt": {
+              "type": "string"
+            },
+            "createdAt": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "Link": {
+      "type": "object",
+      "properties": {
+        "rel": {
+          "type": "string",
+          "description": "Relation to the existing resource"
+        },
+        "href": {
+          "type": "string",
+          "description": "URL to the existing resource"
+        }
+      }
+    },
+    "ErrorResponse": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Error code"
+          },
+          "date": {
+            "type": "string",
+            "format": "date-item",
+            "description": "Date and time of the error"
+          },
+          "message": {
+            "type": "string",
+            "description": "Error message"
+          },
+          "details": {
+            "type": "string",
+            "description": "Details of the error"
+          }
+        }
+      }
+    }
+  }
+}
