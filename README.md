@@ -10,7 +10,6 @@ Social network for devs sharing your feelings.
 > npm/yarn install
 > npm/yarn run server
 ```
-
 ### Client
 ```
 > cd client
@@ -21,10 +20,15 @@ Social network for devs sharing your feelings.
 ## Changelog
 
 ### Client
-0.0.1 - Initial version development.
-
+1.0.0 - Initial version w/bootstrap 4.
 ### Server
-1.0.0 - API v.1 finished
+1.0.0 - API v.1 finished.
+
+## TODO
+### Client
+* Refactor all code using Material Ui.
+### Server
+* Refactor all code to use Postgre and Sequelize.
 
 ---
 Dante Webmaster - 2018
