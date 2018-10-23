@@ -18,10 +18,10 @@ class UsersRepository {
     try {
       transaction = await db.transaction();
       const newUid = uuid();
-      data.users.userUid = newUid;
-      await User.create(data.users, { transaction });
+      data.user.userUid = newUid;
+      await User.create(data.user, { transaction });
       await transaction.commit();
-      return data.users;
+      return data.user;
     } catch (err) {
       await transaction.rollback();
       return Exception.raise({
@@ -45,13 +45,13 @@ class UsersRepository {
     }
 
     return User.findAll({
-      // limit: options.limit,
-      // offset: options.offset,
-      attributes: ['userUid', 'firstName', 'city'],
-      // where: { [Op.and]: andUsers },
-      // order: [
-      //   ['firstName', 'ASC'],
-      // ],
+      limit: options.limit,
+      offset: options.offset,
+      attributes: ['userUid', 'email', 'firstName', 'lastName', 'avatar', 'address', 'city'],
+      where: { [Op.and]: andUsers },
+      order: [
+        ['firstName', 'ASC'],
+      ],
     });
   }
 
@@ -91,8 +91,8 @@ class UsersRepository {
     }
   }
 
-  async existUserName({ userName, userUid }) {
-    logger.debug('UsersRepository.existUser');
+  async existUserName({ userUid, userName }) {
+    logger.debug('UsersRepository.existUserName');
     const andCondition = [];
 
     if (userUid) {

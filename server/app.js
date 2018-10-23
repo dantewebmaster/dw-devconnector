@@ -1,7 +1,6 @@
 const swaggerTools = require('swagger-tools');
-const bodyParser = require('body-parser'); // eslint-disable-line import/no-extraneous-dependencies
+const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
-const cors = require('cors');
 const { Exception, errorDefinitions, handleError } = require('./api/helpers/errors');
 const logger = require('./api/helpers/logger');
 const config = require('./config');
@@ -34,9 +33,6 @@ const customErrorHandler = (err, req, res, next) => { // eslint-disable-line no-
 swaggerTools.initializeMiddleware(swaggerDoc, (middleware) => {
   app.use(bodyParser.json({ limit: '20MB' }));
   app.use(middleware.swaggerMetadata());
-  app.use(cors({
-    headers: '*',
-  }));
   // Setup security handlers
   app.use(middleware.swaggerSecurity({
     appToken(req, def, token, callback) {
@@ -47,14 +43,6 @@ swaggerTools.initializeMiddleware(swaggerDoc, (middleware) => {
         req.swagger.params = {
           ...req.swagger.params,
           userId: { value: user.userCode },
-          company: { value: user.company.companyId },
-          country: { value: user.country.code },
-          timeZone: { value: user.country.timeZone },
-          language: { value: user.country.language },
-          businessModelId: {
-            value: (req.swagger.params.businessModelId || {}).value ||
-              user.businessModel.businessModelId,
-          },
         };
 
         callback();

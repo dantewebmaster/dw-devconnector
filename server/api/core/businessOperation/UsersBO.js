@@ -21,8 +21,47 @@ class UsersBO {
     };
   }
 
-  async getUsers() {
-    logger.debug('UsersBO.getUsers');
+  async create() {
+    logger.debug('UsersBO.create');
+    const data = await this.getDataFromParams(true);
+    return this.usersRepository.create(data, this.options);
+  }
+
+  async getDataFromParams(isNew) {
+    const data = {
+      user: {
+        userUid: (this.params.uuid || {}).value,
+      },
+    };
+
+    if (isNew) {
+      Object.assign(data.user, {
+        createdAt: Date.now(),
+      });
+    }
+
+    await this.validateInput(data.user);
+    return data;
+  }
+
+  async validateInput(input) {
+    const criteria = {
+      userUid: input.userUid,
+    };
+    const userDuplicated = await this.usersRepository.existUser(
+      {
+        ...criteria,
+        userUid: input.userUid,
+      },
+      this.options,
+    );
+    if (userDuplicated) {
+      Exception.raise(errorDefinitions.USER_ALREADY_EXISTS);
+    }
+  }
+
+  async get() {
+    logger.debug('UsersBO.get');
     const criteria = {};
     const data = await this.usersRepository.getUsers(criteria, this.options);
     return Dependency.usersTransformer

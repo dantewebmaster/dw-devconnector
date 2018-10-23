@@ -5,6 +5,14 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       field: 'user_uid',
     },
+    email: {
+      type: DataTypes.STRING,
+      field: 'email',
+    },
+    password: {
+      type: DataTypes.STRING,
+      field: 'password',
+    },
     firstName: {
       type: DataTypes.STRING,
       field: 'first_name',
@@ -13,6 +21,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       field: 'last_name',
     },
+    avatar: {
+      type: DataTypes.STRING,
+      field: 'avatar',
+    },
     address: {
       type: DataTypes.STRING,
       field: 'address',
@@ -20,6 +32,20 @@ module.exports = (sequelize, DataTypes) => {
     city: {
       type: DataTypes.STRING,
       field: 'city',
+    },
+    country: {
+      type: DataTypes.STRING,
+      field: 'country',
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      field: 'created_at',
+      defaultValue: DataTypes.NOW,
+    },
+    lastUpdatedAt: {
+      type: DataTypes.DATE,
+      field: 'last_updated_at',
+      defaultValue: DataTypes.NOW,
     },
   }, {
       createdAt: 'created_at',
