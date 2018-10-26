@@ -358,6 +358,76 @@
         }
       }
     },
+    "/users/register": {
+      "x-swagger-router-controller": "usersController",
+      "post": {
+        "summary": "Register a new user",
+        "description": "Register a new user with payload.",
+        "tags": [
+          "Users"
+        ],
+        "operationId": "registerUser",
+        "produces": [
+          "application/json"
+        ],
+        "security": [],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Payload to create the new user.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
     "/swagger": {
       "x-swagger-pipe": "swagger_raw"
     }
@@ -373,66 +443,55 @@
     "User": {
       "type": "object",
       "properties": {
-        "user": {
-          "type": "object",
-          "properties": {
-            "userUid": {
-              "type": "string",
-              "format": "uuid"
-            },
-            "firstName": {
-              "type": "string"
-            },
-            "lastName": {
-              "type": "string"
-            },
-            "address": {
-              "type": "string"
-            },
-            "city": {
-              "type": "string"
-            },
-            "lastUpdatedAt": {
-              "type": "string"
-            },
-            "createdAt": {
-              "type": "string"
-            }
-          }
+        "userUid": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string",
+          "format": "email"
+        },
+        "avatar": {
+          "type": "string",
+          "format": "uri"
+        },
+        "password": {
+          "type": "string",
+          "format": "password"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "lastUpdatedAt": {
+          "type": "string",
+          "format": "date-time"
         }
       }
     },
     "UserInput": {
       "type": "object",
       "properties": {
-        "user": {
-          "type": "object",
-          "properties": {
-            "userUid": {
-              "type": "string",
-              "format": "uuid"
-            },
-            "firstName": {
-              "type": "string"
-            },
-            "lastName": {
-              "type": "string"
-            },
-            "address": {
-              "type": "string"
-            },
-            "city": {
-              "type": "string"
-            },
-            "lastUpdatedAt": {
-              "type": "string"
-            },
-            "createdAt": {
-              "type": "string"
-            }
-          }
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string",
+          "format": "email"
+        },
+        "password": {
+          "type": "string",
+          "format": "password"
         }
-      }
+      },
+      "required": [
+        "name",
+        "email",
+        "password"
+      ]
     },
     "Link": {
       "type": "object",
