@@ -21,22 +21,26 @@ class UsersBO {
     };
   }
 
-  async create() {
-    logger.debug('UsersBO.create');
+  async registerUser() {
+    logger.debug('UsersBO.registerUser');
     const data = await this.getDataFromParams(true);
-    return this.usersRepository.create(data, this.options);
+    return this.usersRepository.registerUser(data, this.options);
   }
 
   async getDataFromParams(isNew) {
     const data = {
       user: {
-        userUid: (this.params.uuid || {}).value,
+        userUid: (this.params.userUid || {}).value,
+        name: (this.params.name || {}).value,
+        email: (this.params.email || {}).value,
+        password: (this.params.password || {}).value,
       },
     };
 
     if (isNew) {
+      const currentDate = new Date;
       Object.assign(data.user, {
-        createdAt: Date.now(),
+        createdAt: currentDate,
       });
     }
 
@@ -49,10 +53,7 @@ class UsersBO {
       userUid: input.userUid,
     };
     const userDuplicated = await this.usersRepository.existUser(
-      {
-        ...criteria,
-        userUid: input.userUid,
-      },
+      { ...criteria, userUid: input.userUid },
       this.options,
     );
     if (userDuplicated) {

@@ -383,6 +383,12 @@
           }
         ],
         "responses": {
+          "201": {
+            "description": "CREATED",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
           "200": {
             "description": "OK",
             "schema": {

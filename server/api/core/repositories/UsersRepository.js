@@ -12,8 +12,8 @@ const {
 
 class UsersRepository {
 
-  async create(data) {
-    logger.debug('UsersRepository.create');
+  async registerUser(data) {
+    logger.debug('UsersRepository.registerUser');
     let transaction;
     try {
       transaction = await db.transaction();
@@ -62,7 +62,7 @@ class UsersRepository {
       andUsers.push({ userUid });
     }
 
-    return User.findAll({
+    return User.findOne({
       where: { [Op.and]: andUsers },
     });
   }

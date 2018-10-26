@@ -10,15 +10,9 @@ module.exports = {
   getUsers: createRequest(CONTROLLER_NAME, 'get', UsersBO),
   getByUid: createRequest(CONTROLLER_NAME, 'getByUid', UsersBO),
 
-  /** --- CREATE ------------------------------------------- */
-  createUser: createRequest(
-    CONTROLLER_NAME, 'create', UsersBO,
-    (res, data) => res.status(httpCodes.CREATED).json(data),
-  ),
-
   /** --- POST ------------------------------------------- */
-  postUser: createRequest(
-    CONTROLLER_NAME, 'post', UsersBO,
+  registerUser: createRequest(
+    CONTROLLER_NAME, 'registerUser', UsersBO,
     (res, data) => res.status(httpCodes.CREATED).json(data),
   ),
 
