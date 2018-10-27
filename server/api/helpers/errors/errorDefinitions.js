@@ -19,6 +19,12 @@ const errorDefinitions = {
     message: 'An input value was not informed',
     detail: '{parameterName: #INPUT}',
   },
+  USER_ALREADY_EXISTS: { // required parameter not filled
+    key: 'USER_ALREADY_EXISTS',
+    statusCode: httpCodes.BAD_REQUEST,
+    message: 'User already registered',
+    detail: '{parameterName: #INPUT}',
+  },
 };
 
 module.exports = errorDefinitions;

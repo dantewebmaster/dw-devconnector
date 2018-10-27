@@ -4,6 +4,9 @@ const usersTransformer = require('../../helpers/transformers/usersTransformer');
 const validations = require('../../helpers/validations');
 const { Exception, errorDefinitions } = require('../../helpers/errors');
 
+const bcrypt = require('bcryptjs');
+const gravatar = require('gravatar');
+
 const Dependency = {
   UsersRepository,
   usersTransformer,
@@ -24,6 +27,22 @@ class UsersBO {
   async registerUser() {
     logger.debug('UsersBO.registerUser');
     const data = await this.getDataFromParams(true);
+
+    const avatar = gravatar.url(data.user.email, {
+      s: '200', // Size
+      r: 'pg',  // Rating
+      d: 'mm'   // Default
+    });
+    // Add avatar to the user
+    data.user.avatar = avatar;
+
+    bcrypt.genSalt(10, (err, salt) => {
+      bcrypt.hash(data.user.password, salt, (err, hash) => {
+        if (err) throw err;
+        data.user.password = hash;
+      });
+    });
+
     return this.usersRepository.registerUser(data, this.options);
   }
 
@@ -31,9 +50,7 @@ class UsersBO {
     const data = {
       user: {
         userUid: (this.params.userUid || {}).value,
-        name: (this.params.name || {}).value,
-        email: (this.params.email || {}).value,
-        password: (this.params.password || {}).value,
+        ...this.params.body.value || {},
       },
     };
 
@@ -51,11 +68,14 @@ class UsersBO {
   async validateInput(input) {
     const criteria = {
       userUid: input.userUid,
+      email: input.email,
     };
+
     const userDuplicated = await this.usersRepository.existUser(
-      { ...criteria, userUid: input.userUid },
+      { ...criteria, email: input.email },
       this.options,
     );
+
     if (userDuplicated) {
       Exception.raise(errorDefinitions.USER_ALREADY_EXISTS);
     }

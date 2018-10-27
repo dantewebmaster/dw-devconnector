@@ -91,8 +91,8 @@ class UsersRepository {
     }
   }
 
-  async existUserName({ userUid, userName }) {
-    logger.debug('UsersRepository.existUserName');
+  async existUser({ userUid, email }) {
+    logger.debug('UsersRepository.existUser');
     const andCondition = [];
 
     if (userUid) {
@@ -101,9 +101,9 @@ class UsersRepository {
       });
     }
 
-    if (userName) {
+    if (email) {
       andCondition.push({
-        userName: { [Op.iLike]: `${userName}` },
+        email: { [Op.eq]: email },
       });
     }
 
@@ -114,15 +114,6 @@ class UsersRepository {
     logger.debug('Name Exists: ', exists);
 
     return exists;
-  }
-
-  async existUser({ userUid }) {
-    logger.debug('UsersRepository.existUser');
-    const exists = await User.count({
-      where: { userUid },
-    });
-    logger.debug(`${userUid} User Exists: `, exists);
-    return exists > 0;
   }
 
 }
