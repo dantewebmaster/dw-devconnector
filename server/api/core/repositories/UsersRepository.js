@@ -47,10 +47,10 @@ class UsersRepository {
     return User.findAll({
       limit: options.limit,
       offset: options.offset,
-      attributes: ['userUid', 'email', 'firstName', 'lastName', 'avatar', 'address', 'city'],
+      attributes: ['userUid', 'name', 'email', 'avatar', 'password', 'createdAt', 'lastUpdatedAt'],
       where: { [Op.and]: andUsers },
       order: [
-        ['firstName', 'ASC'],
+        ['name', 'ASC'],
       ],
     });
   }

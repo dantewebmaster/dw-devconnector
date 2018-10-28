@@ -28,14 +28,6 @@
       "required": true,
       "type": "string"
     },
-    "language": {
-      "name": "language",
-      "in": "header",
-      "description": "Language as defined by ISO-6391.",
-      "type": "string",
-      "required": false,
-      "default": "pt-BR"
-    },
     "uuid": {
       "name": "uuid",
       "in": "path",
@@ -57,28 +49,6 @@
       "required": false,
       "type": "string",
       "default": "America/Sao Paulo"
-    },
-    "userId": {
-      "name": "userId",
-      "in": "header",
-      "description": "Current User identifier",
-      "type": "string"
-    },
-    "postalCode": {
-      "name": "status",
-      "in": "query",
-      "required": false,
-      "type": "string",
-      "description": "Postal code",
-      "default": ""
-    },
-    "role": {
-      "name": "role",
-      "in": "query",
-      "required": false,
-      "type": "string",
-      "description": "Filter by Role of BusinessModel",
-      "default": ""
     },
     "_limit": {
       "name": "_limit",
@@ -102,7 +72,7 @@
       "x-swagger-router-controller": "usersController",
       "get": {
         "summary": "Get list of Users.",
-        "description": ".",
+        "description": "Retrieve the list of registered users from database.",
         "tags": [
           "Users"
         ],
@@ -120,204 +90,6 @@
                 "$ref": "#/definitions/User"
               }
             }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "422": {
-            "description": "Unprocessable Entity",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      },
-      "post": {
-        "summary": "Create new user.",
-        "description": ".",
-        "tags": [
-          "Users"
-        ],
-        "operationId": "createUser",
-        "produces": [
-          "application/json"
-        ],
-        "security": [],
-        "parameters": [
-          {
-            "name": "userData",
-            "in": "body",
-            "description": "Body data in JSON for create a new user.",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/User"
-            }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "The user was successfully created.",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/User"
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "422": {
-            "description": "Unprocessable Entity",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/users/uuid/{uuid}": {
-      "x-swagger-router-controller": "usersController",
-      "get": {
-        "summary": "Get user by uid.",
-        "description": ".",
-        "tags": [
-          "Users"
-        ],
-        "operationId": "getByUid",
-        "produces": [
-          "application/json"
-        ],
-        "security": [],
-        "parameters": [
-          {
-            "$ref": "#/parameters/uuid"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/UserInput"
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "422": {
-            "description": "Unprocessable Entity",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Users"
-        ],
-        "summary": "Delete User.",
-        "description": ".",
-        "operationId": "deleteUser",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "security": [],
-        "parameters": [
-          {
-            "$ref": "#/parameters/uuid"
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "No Content"
           },
           "400": {
             "description": "Bad Request",

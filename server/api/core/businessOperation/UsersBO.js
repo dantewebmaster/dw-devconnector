@@ -28,14 +28,9 @@ class UsersBO {
     logger.debug('UsersBO.registerUser');
     const data = await this.getDataFromParams(true);
 
-    const avatar = gravatar.url(data.user.email, {
-      s: '200', // Size
-      r: 'pg',  // Rating
-      d: 'mm'   // Default
-    });
     // Add avatar to the user
-    data.user.avatar = avatar;
-
+    data.user.avatar = await this.getAvatar(data.user.email);
+    // Hash password
     bcrypt.genSalt(10, (err, salt) => {
       bcrypt.hash(data.user.password, salt, (err, hash) => {
         if (err) throw err;
@@ -44,6 +39,15 @@ class UsersBO {
     });
 
     return this.usersRepository.registerUser(data, this.options);
+  }
+
+  async getAvatar(email) {
+    const avatar = gravatar.url(email, {
+      s: '200', // Size
+      r: 'pg',  // Rating
+      d: 'mm'   // Default
+    });
+    return avatar;
   }
 
   async getDataFromParams(isNew) {
@@ -81,12 +85,11 @@ class UsersBO {
     }
   }
 
-  async get() {
-    logger.debug('UsersBO.get');
+  async getUsers() {
+    logger.debug('UsersBO.getUsers');
     const criteria = {};
     const data = await this.usersRepository.getUsers(criteria, this.options);
-    return Dependency.usersTransformer
-      .transform(data);
+    return data;
   }
 
   async getByUid() {

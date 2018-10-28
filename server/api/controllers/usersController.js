@@ -7,7 +7,7 @@ const CONTROLLER_NAME = 'users';
 module.exports = {
 
   /** --- GET ------------------------------------------- */
-  getUsers: createRequest(CONTROLLER_NAME, 'get', UsersBO),
+  getUsers: createRequest(CONTROLLER_NAME, 'getUsers', UsersBO),
   getByUid: createRequest(CONTROLLER_NAME, 'getByUid', UsersBO),
 
   /** --- POST ------------------------------------------- */
