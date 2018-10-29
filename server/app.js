@@ -10,8 +10,8 @@ process.on('uncaughtException', (err) => {
 });
 
 const options = {
-  swaggerUi: './server/api/swagger/swagger.json',
-  controllers: './server/api//controllers',
+  swaggerUi: './api/swagger/swagger.json',
+  controllers: './server/api/controllers',
 };
 const swaggerDoc = require('./api/swagger/swagger.json');
 

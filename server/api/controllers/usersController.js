@@ -15,6 +15,10 @@ module.exports = {
     CONTROLLER_NAME, 'registerUser', UsersBO,
     (res, data) => res.status(httpCodes.CREATED).json(data),
   ),
+  loginUser: createRequest(
+    CONTROLLER_NAME, 'loginUser', UsersBO,
+    (res, data) => res.status(httpCodes.OK).json(data),
+  ),
 
   /** --- PATCH ------------------------------------------- */
   patchUser: createRequest(

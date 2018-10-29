@@ -6,6 +6,7 @@ const { Exception, errorDefinitions } = require('../../helpers/errors');
 
 const bcrypt = require('bcryptjs');
 const gravatar = require('gravatar');
+const keys = require('../../../config/keys');
 
 const Dependency = {
   UsersRepository,
@@ -48,6 +49,55 @@ class UsersBO {
       d: 'mm'   // Default
     });
     return avatar;
+  }
+
+  async loginUser() {
+    logger.debug('UsersBO.loginUser');
+
+    // const { errors, isValid } = validateLoginInput(req.body);
+    // Check Validation
+    // if (!isValid) {
+    //   return res.status(400).json(errors);
+    // }
+
+    const data = await this.getDataFromParams(false);
+
+    const email = data.user.email;
+    const password = data.user.password;
+
+    User.findOne({ email })
+      .then(user => {
+        // Check for user
+        if (!user) {
+          errors.email = 'User not found'
+          return res.status(404).json(errors);
+        }
+
+        // Check password
+        bcrypt.compare(password, user.password)
+          .then(isMatch => {
+            if (isMatch) {
+              // User matched
+
+              const payload = { userId: user.userUid, name: user.name, avatar: user.avatar } // JWT Payload
+
+              // Sign Token
+              jwt.sign(
+                payload,
+                keys.secret,
+                { expiresIn: 3600 },
+                (err, token) => {
+                  res.json({
+                    success: true,
+                    token: 'Bearer ' + token
+                  });
+                });
+            } else {
+              errors.password = 'Password incorrect';
+              return res.status(400).json(errors);
+            }
+          });
+      });
   }
 
   async getDataFromParams(isNew) {
