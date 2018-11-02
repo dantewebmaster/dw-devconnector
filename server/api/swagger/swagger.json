@@ -250,13 +250,13 @@
           "201": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/User"
+              "$ref": "#/definitions/UserToken"
             }
           },
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/User"
+              "$ref": "#/definitions/UserToken"
             }
           },
           "400": {
@@ -362,6 +362,17 @@
         "email",
         "password"
       ]
+    },
+    "UserToken": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "token": {
+          "type": "string"
+        }
+      }
     },
     "LoginInput": {
       "type": "object",

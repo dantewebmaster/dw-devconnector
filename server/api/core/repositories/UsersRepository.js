@@ -45,7 +45,7 @@ class UsersRepository {
       where: {
         email: data.email
       },
-      attributes: ['userUid', 'email', 'name', 'password']
+      attributes: ['userUid', 'name', 'email', 'password']
     });
 
     // Check for user
@@ -62,24 +62,19 @@ class UsersRepository {
       const payload = {
         userUid: user.userUid,
         name: user.name,
-        avatar: user.avatar
+        avatar: user.avatar,
       }
 
       // Sign Token
-      await jwt.sign(
-        payload,
-        keys.secretOrKey,
-        { expiresIn: 3600 },
-        (err, token) => {
-          return response = {
-            success: true,
-            token: 'Bearer ' + token
-          }
-        }
-      );
+      const userToken = await jwt.sign(payload, keys.secretOrKey, { expiresIn: 3600 });
+
+      return response = {
+        success: true,
+        token: 'Bearer ' + userToken
+      }
+
     } else {
-      errors.password = 'Password incorrect';
-      return errors;
+      return errors.password = 'Password incorrect';
     }
   }
 
