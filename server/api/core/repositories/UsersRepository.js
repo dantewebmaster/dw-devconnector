@@ -2,6 +2,9 @@ const logger = require('../../helpers/logger');
 const models = require('../models');
 const uuid = require('uuid/v1');
 const { Exception, errorDefinitions } = require('../../helpers/errors');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const keys = require('../../../config/keys');
 
 const db = models.sequelize;
 const { Op } = models.sequelize;
@@ -29,6 +32,54 @@ class UsersRepository {
         detail: err.message,
         stack: err.stack,
       });
+    }
+  }
+
+  async loginUser(data) {
+    logger.debug('UsersRepository.loginUser');
+
+    const errors = {};
+    let response;
+
+    const user = await User.findOne({
+      where: {
+        email: data.email
+      },
+      attributes: ['userUid', 'email', 'name', 'password']
+    });
+
+    // Check for user
+    if (!user) {
+      errors.email = 'User not found'
+      return res.status(404).json(errors);
+    }
+
+    // Check password
+    const isMatch = await bcrypt.compare(data.password, user.password);
+
+    if (isMatch) {
+      // JWT Payload
+      const payload = {
+        userUid: user.userUid,
+        name: user.name,
+        avatar: user.avatar
+      }
+
+      // Sign Token
+      await jwt.sign(
+        payload,
+        keys.secretOrKey,
+        { expiresIn: 3600 },
+        (err, token) => {
+          return response = {
+            success: true,
+            token: 'Bearer ' + token
+          }
+        }
+      );
+    } else {
+      errors.password = 'Password incorrect';
+      return errors;
     }
   }
 

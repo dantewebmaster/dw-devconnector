@@ -42,6 +42,22 @@
       "description": "company code",
       "type": "string"
     },
+    "email": {
+      "name": "email",
+      "in": "query",
+      "description": "E-mail",
+      "type": "string",
+      "format": "email",
+      "required": true
+    },
+    "password": {
+      "name": "password",
+      "in": "query",
+      "description": "Password",
+      "type": "string",
+      "format": "password",
+      "required": true
+    },
     "timeZone": {
       "name": "timeZone",
       "in": "header",
@@ -223,10 +239,10 @@
           {
             "in": "body",
             "name": "body",
-            "description": "Payload to create the new user.",
+            "description": "Payload to login the user.",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/UserInput"
+              "$ref": "#/definitions/LoginInput"
             }
           }
         ],
@@ -343,6 +359,23 @@
       },
       "required": [
         "name",
+        "email",
+        "password"
+      ]
+    },
+    "LoginInput": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "format": "email"
+        },
+        "password": {
+          "type": "string",
+          "format": "password"
+        }
+      },
+      "required": [
         "email",
         "password"
       ]
