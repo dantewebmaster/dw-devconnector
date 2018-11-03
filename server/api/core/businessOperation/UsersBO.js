@@ -116,8 +116,8 @@ class UsersBO {
     return data;
   }
 
-  async delete() {
-    logger.debug('UsersBO.delete');
+  async deleteUser() {
+    logger.debug('UsersBO.deleteUser');
     validations.isUUID(this.params.uuid.value, 'user');
     const criteria = {
       userUid: this.params.uuid.value,
@@ -127,7 +127,7 @@ class UsersBO {
       Exception.raise(errorDefinitions.USER_NOT_FOUND);
     }
     // send to repository and get results
-    return this.usersRepository.delete(criteria, this.options);
+    return this.usersRepository.deleteUser(criteria, this.options);
   }
 }
 

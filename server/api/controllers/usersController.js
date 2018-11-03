@@ -30,7 +30,7 @@ module.exports = {
 
   /** --- DELETE ------------------------------------------- */
   deleteUser: createRequest(
-    CONTROLLER_NAME, 'delete', UsersBO,
+    CONTROLLER_NAME, 'deleteUser', UsersBO,
     (res) => {
       res.status(httpCodes.NO_CONTENT).end();
     },

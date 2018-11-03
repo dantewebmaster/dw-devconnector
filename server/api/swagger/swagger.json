@@ -226,7 +226,7 @@
       "x-swagger-router-controller": "usersController",
       "post": {
         "summary": "Login the user",
-        "description": "Login usign the user credentials.",
+        "description": "Login using the user credentials.",
         "tags": [
           "Users"
         ],
@@ -257,6 +257,76 @@
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/UserToken"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/users/delete/{uuid}": {
+      "x-swagger-router-controller": "usersController",
+      "delete": {
+        "summary": "Delete user",
+        "description": "Delete user using the passed uuid.",
+        "tags": [
+          "Users"
+        ],
+        "operationId": "deleteUser",
+        "produces": [
+          "application/json"
+        ],
+        "security": [],
+        "parameters": [
+          {
+            "$ref": "#/parameters/uuid"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/User"
             }
           },
           "400": {

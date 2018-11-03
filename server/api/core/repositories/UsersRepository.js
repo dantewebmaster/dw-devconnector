@@ -39,13 +39,13 @@ class UsersRepository {
     logger.debug('UsersRepository.loginUser');
 
     const errors = {};
-    let response;
+    let response = {};
 
     const user = await User.findOne({
       where: {
         email: data.email
       },
-      attributes: ['userUid', 'name', 'email', 'password']
+      attributes: ['userUid', 'name', 'email', 'password', 'avatar']
     });
 
     // Check for user
@@ -66,12 +66,14 @@ class UsersRepository {
       }
 
       // Sign Token
-      const userToken = await jwt.sign(payload, keys.secretOrKey, { expiresIn: 3600 });
+      const userToken = jwt.sign(payload, keys.secretOrKey, { expiresIn: 3600 });
 
-      return response = {
+      response = {
         success: true,
         token: 'Bearer ' + userToken
       }
+
+      return response;
 
     } else {
       return errors.password = 'Password incorrect';
@@ -113,18 +115,14 @@ class UsersRepository {
     });
   }
 
-  async delete({ userUid }) {
-    logger.debug('UsersRepository.delete');
-    const andUser = [];
-    if (userUid) {
-      andUser.push({ userUid });
-    }
+  async deleteUser({ userUid }) {
+    logger.debug('UsersRepository.deleteUser');
     let transaction;
     try {
       transaction = await db.transaction();
       await User.destroy({
         transaction,
-        where: { [Op.and]: andUser },
+        where: { userUid },
       });
       await transaction.commit();
     } catch (err) {
@@ -143,7 +141,7 @@ class UsersRepository {
 
     if (userUid) {
       andCondition.push({
-        userUid: { [Op.ne]: userUid },
+        userUid: { [Op.eq]: userUid },
       });
     }
 
