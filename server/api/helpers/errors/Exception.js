@@ -13,15 +13,14 @@ class Exception {
     this.date = new Date();
     this.isArray = (definition || {}).constructor === Array;
   }
+
   static generateCustomError(errorDefinition) {
-    const mergeDef = (def, stack) => (
-      {
-        ...def,
-        message: mergeMessage(def.message, def.values),
-        detail: mergeMessage(def.detail, def.values),
-        stack: def.stack || stack,
-      }
-    );
+    const mergeDef = (def, stack) => ({
+      ...def,
+      message: mergeMessage(def.message, def.values),
+      detail: mergeMessage(def.detail, def.values),
+      stack: def.stack || stack,
+    });
 
     let definition;
     const native = new Error();
@@ -32,6 +31,7 @@ class Exception {
     }
     return definition;
   }
+
   static raise(errorDefinition) {
     throw new Exception(Exception.generateCustomError(errorDefinition));
   }

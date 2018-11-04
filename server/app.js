@@ -5,9 +5,7 @@ const { Exception, errorDefinitions, handleError } = require('./api/helpers/erro
 const logger = require('./api/helpers/logger');
 const config = require('./config');
 
-process.on('uncaughtException', (err) => {
-  process.stdout.write(`Caught exception: ${err}`);
-});
+process.on('uncaughtException', err => process.stdout.write(`Caught exception: ${err}`));
 
 const options = {
   swaggerUi: './api/swagger/swagger.json',

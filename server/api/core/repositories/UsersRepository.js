@@ -50,8 +50,7 @@ class UsersRepository {
 
     // Check for user
     if (!user) {
-      errors.email = 'User not found'
-      return res.status(404).json(errors);
+      return errors.email = 'User not found';
     }
 
     // Check password
@@ -155,7 +154,7 @@ class UsersRepository {
       where: { [Op.and]: andCondition },
     }) > 0;
 
-    logger.debug('Name Exists: ', exists);
+    logger.debug('User exists: ', exists);
 
     return exists;
   }

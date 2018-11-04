@@ -1,14 +1,13 @@
 const logger = require('../logger');
 
-const convertErrorToObject = (err, debugMode) =>
-  ({
-    key: err.key || 'ERROR_NOT_HANDLED',
-    statusCode: err.statusCode,
-    Date: new Date(),
-    message: err.message,
-    detail: err.detail,
-    stack: debugMode ? err.stack : undefined,
-  });
+const convertErrorToObject = (err, debugMode) => ({
+  key: err.key || 'ERROR_NOT_HANDLED',
+  statusCode: err.statusCode,
+  date: new Date(),
+  message: err.message,
+  detail: err.detail,
+  stack: debugMode ? err.stack : undefined,
+});
 
 const handleError = (err, debugMode = false) => {
   let ret;
