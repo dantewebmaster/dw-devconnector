@@ -1,0 +1,9 @@
+export default {
+  SET_FIELD: '@@StructureSuggestion/SET_FIELD',
+  RESET_LISTS: '@@StructureSuggestion/RESET_LISTS',
+  RESET_FIELDS: '@@StructureSuggestion/RESET_FIELDS',
+  FETCH_GEO_STRUCTURE_TREE_ASYNC: '@@StructureSuggestion/FETCH_GEO_STRUCTURE_TREE_ASYNC',
+  FETCH_SUGGESTED_STRUCTURE: '@@StructureSuggestion/FETCH_SUGGESTED_STRUCTURE',
+  FETCH_FUNCTIONS: '@@StructureSuggestion/FETCH_FUNCTIONS',
+  FETCH_STRUCTURE_RESPONSIBLE: '@@StructureSuggestion/FETCH_STRUCTURE_RESPONSIBLE',
+};

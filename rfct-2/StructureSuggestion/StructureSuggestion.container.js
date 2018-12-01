@@ -23,18 +23,20 @@ class StructureSuggestion extends Component {
     } else if (
       !thisFields.geoCoverageCode
       && thisFields.geoCoverageCode !== prevFields.geoCoverageCode
-      && user.techParams.geoCoverageType !== '1'
+      && user.techParams.geoCoverageType !== '2'
+      || thisFields.searchText !== prevFields.searchText && thisFields.searchText === ''
     ) {
-      handlers.resetLists(['structureSearchTree']);
-      handlers.resetFields('personCode');
+      handlers.resetLists(['geoStructures']);
     }
 
-    if (thisFields.suggestedStructure.structureCode && thisFields.suggestedStructure.structureCode !== prevFields.suggestedStructure.structureCode && Object.keys(thisFields.suggestedStructure).length > 0) {
-      actions.fetchStructureResponsible(thisFields.suggestedStructure.structureLevelId, thisFields.suggestedStructure.structureCode);
-    }
+    thisFields.structureCode
+      && thisFields.structureCode !== prevFields.structureCode
+      && thisFields.structureCode !== ''
+      && actions.fetchStructureResponsible(thisFields.structureLevelId, thisFields.structureCode);
   }
 
   handleGetGeoStructureTree = payload => {
+    const { actions } = this.props;
     let code;
     let desc;
 
@@ -49,22 +51,20 @@ class StructureSuggestion extends Component {
       },
     };
 
-    this.props.actions.fetchGeoStructureTree(config);
+    actions.fetchGeoStructureTree(config);
   }
 
   handleGetSuggestedStructure = () => {
     const { actions, structureSuggestion: { fields, lists } } = this.props;
 
-    actions.resetFields('geoCoverageCode');
-
-    actions.resetFields('suggestedStructure');
+    actions.resetLists('suggestedStructureTree');
+    actions.resetFields('structureResponsible');
 
     const payload = {
       'personId': fields.personId || undefined,
       'role': lists.nonLeadershipFunctions[0].role.roleId || undefined,
       'function': lists.nonLeadershipFunctions[0].functionId || undefined,
-      // 'function': fields.personFunction || undefined,
-      'geoCoverageCode': fields.geoCoverageCode || undefined,
+      'geoCoverageCode': fields.geoCoverageCode || fields.searchText || undefined,
       'registrantPersonCode': fields.registrantPersonCode || undefined,
       'indicativePersonCode': fields.indicativePersonCode || undefined,
       'flowType': fields.flowType || 'CT',
@@ -73,23 +73,33 @@ class StructureSuggestion extends Component {
     actions.fetchSuggestedStructure(payload);
   }
 
-  handleGeoCoverageType() {
-    const { user } = this.props;
-    return user.techParams;
-  }
+  handleClearSearch = () => {
+    const { handlers } = this.props;
+    handlers.resetLists(['geoStructures', 'suggestedStructureTree']);
+    handlers.resetFields(['geoCoverageCode', 'suggestedStructure', 'structureResponsible', 'structureCode', 'structureLevelId']);
+  };
 
   get handlers() {
     return {
       ...this.props.handlers,
       getSuggestedStructure: this.handleGetSuggestedStructure,
       geoCoverageType: this.handleGeoCoverageType,
+      clearSearch: this.handleClearSearch,
+    };
+  }
+
+  get fields() {
+    const { structureSuggestion: { fields }, user: { techParams } } = this.props;
+    return {
+      ...fields,
+      techParams
     };
   }
 
   render() {
-    const { structureSuggestion: { fields, lists } } = this.props;
+    const { structureSuggestion: { lists } } = this.props;
     return (
-      <StructureSuggestionView fields={fields} lists={lists} handlers={this.handlers} />
+      <StructureSuggestionView fields={this.fields} lists={lists} handlers={this.handlers} />
     );
   }
 }
