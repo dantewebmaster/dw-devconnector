@@ -1,0 +1,27 @@
+.home {
+    width: 100%;
+    max-width: 1360px;
+    height: 768px;
+    background: url(/assets/images/background-index.svg) no-repeat bottom;
+    position: relative;
+    margin: 0px auto;
+
+    .content {
+        position: absolute;
+        top: 119px;
+        right: 320px;
+        width: 225px;
+
+        img {
+            margin-bottom: 62px;
+        }
+
+        h3 {
+            margin-bottom: 25px;
+        }
+
+        .btn {
+            margin-top: 40px;
+        }
+    }
+}

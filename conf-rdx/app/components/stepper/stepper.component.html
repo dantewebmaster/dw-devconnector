@@ -1,0 +1,8 @@
+<!-- Horizontal Steppers -->
+<div class="step-wrapper">
+  <ul class="stepper stepper-horizontal">
+    <li class="step" *ngFor="let step of data" [ngClass]="{active: step.active, completed: step.completed}">
+      <span class="label">{{ step.title }}</span>
+    </li>
+  </ul>
+</div>

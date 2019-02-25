@@ -1,0 +1,15 @@
+<div class="dw-autocomplete">
+  <ng-autocomplete [data]="users$ | async" [searchKeyword]="keyword" (selected)='selectEvent($event)'
+    (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)' [itemTemplate]="itemTemplate"
+    [notFoundTemplate]="notFoundTemplate" [placeHolder]="inputPlaceholder" [minQueryLength]="4">
+  </ng-autocomplete>
+
+  <ng-template #itemTemplate let-item>
+    <a>{{ item.name.first }} - {{ item.name.last }}</a>
+    <!-- Outra opção <a [innerHTML]="item.DrugstoreId"></a> -->
+  </ng-template>
+
+  <ng-template #notFoundTemplate let-notFound>
+    <div [innerHTML]="notFound"></div>
+  </ng-template>
+</div>

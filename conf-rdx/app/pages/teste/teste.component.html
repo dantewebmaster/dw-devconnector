@@ -1,0 +1,48 @@
+<main class="teste">
+	<section>
+		<div class="container">
+			<h1>Pagina de Teste</h1>
+			<hr>
+
+			<app-stepper stepTitle="Página teste" stepCompleted="true"></app-stepper>
+	
+			<form [formGroup]="testeForm" (ngSubmit)="onSubmit()">
+				<div class="row justify-content-md-center mt-5">
+					<div class="col-6">
+						<div class="jumbotron">
+							<p class="lead pb-3">
+								Faça o log pelos respectivos inputs
+							</p>
+							<div class="form-group">
+								<label for="exampleInputEmail1">Mensagem do Log</label>
+								<input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+								formControlName="msg"
+								[ngClass]="{ 'is-invalid': submitted && f.msg.errors }" />
+								
+								<div *ngIf="submitted && f.msg.errors" class="invalid-feedback">
+									<small *ngIf="f.msg.errors.required" class="form-text text-muted">
+									Mensagem Obrigatoria!
+									</small>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="exampleInputPassword1">Informações extras do Log</label>
+								<input type="text" class="form-control" id="exampleInputPassword1"
+								formControlName="extraMsg" />
+							</div>	
+							<div class="form-group">
+								<label for="typeLevel">Type Level</label>
+								<select class="form-control" id="typeLevel" formControlName="typeLevel">
+									<option *ngFor="let level of typeLevel" [value]="level" [selected]="getTypeSelected(level)">{{level}}</option>
+								</select>
+							</div>
+							<div class="form-group">
+								<button [disabled]="loading" class="form-control btn btn-primary">logar</button>
+							</div>
+						</div>
+					</div>	
+				</div>
+			</form>
+		</div>
+	</section>
+</main>

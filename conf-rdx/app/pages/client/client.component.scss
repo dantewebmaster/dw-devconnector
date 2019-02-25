@@ -1,0 +1,23 @@
+.page {
+    // align-items: flex-start;
+    .content {
+        &:after {
+            background: url(../../../assets/images/cliente-linha.svg);
+            width: 620px;
+            height: 210px;
+        }
+        
+        .description {
+            width: 557px;
+
+            .text {
+                .title {
+                    width: 290px;
+                }
+                p {
+                    width: 230px;
+                }
+            }
+        }
+    }
+}

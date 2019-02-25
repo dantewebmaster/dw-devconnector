@@ -1,0 +1,26 @@
+.page {
+    height: 100%;
+    .content {
+        &:after {
+            background: url(../../../assets/images/loja-linha.svg);
+            width: 492px;
+            height: 103px;
+        }
+
+        .description {
+            width: 444px;
+
+            .text {
+                .title {
+                    width: 155px;
+                }
+                p {
+                    width: 202px;
+                }
+            }
+        }
+    }
+    .form {
+      max-width: 500px;
+    }
+}
