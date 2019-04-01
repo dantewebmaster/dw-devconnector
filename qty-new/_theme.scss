@@ -1,0 +1,437 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "./vars";
+@import "./svgs";
+/**
+ * Custom theming
+ */
+
+// Button
+.mat-flat-button {
+  &.mat-primary {
+    min-width: 150px;
+    height: 36px;
+    border-radius: 18px;
+    border: 0;
+    font-size: 12px;
+    padding: 0px 10px;
+    background: linear-gradient(to bottom, #81c7d7, $primary-color);
+    box-shadow: 0px 10px 25px 0px #9ac2fd;
+    line-height: 35px;
+
+    .mat-button-wrapper {
+      color: $white-color;
+    }
+
+    &[disabled] {
+      background: #adadad;
+      box-shadow: none;
+      color: $dark-color;
+
+      .mat-button-wrapper {
+        color: $dark-color;
+      }
+    }
+    &.white {
+      background: $white-color;
+      box-shadow: none;
+      border: solid 1px #adadad;
+      .mat-button-wrapper {
+        color: $dark-color;
+      }
+    }
+  }
+}
+
+.mat-stroked-button {
+  min-width: 150px;
+  height: 36px;
+  border-radius: 18px !important;
+  font-size: 12px;
+  padding: 0px 10px;
+  background: $white-color;
+  line-height: 35px;
+
+  .mat-button-wrapper {
+    color: $dark-color;
+  }
+
+  &[disabled] {
+    background: #adadad;
+    box-shadow: none;
+    color: $dark-color;
+
+    .mat-button-wrapper {
+      color: $dark-color;
+    }
+  }
+}
+
+// Automcomplete
+.mat-form-field:not(.no-style) {
+  width: 100%;
+  height: 45px;
+  background: $white-color;
+  border-radius: 25px;
+  font-size: 13px;
+  padding: 0 14px;
+  transition: all 0.15s ease-in-out;
+
+  input {
+    z-index: 100000;
+  }
+
+  &.mat-focused {
+    box-shadow: 0px 25px 56px -6px rgba(#44abc3, 0.5);
+  }
+}
+
+.mat-form-field-appearance-legacy {
+  .mat-form-field-infix {
+    z-index: 100000;
+  }
+
+  .mat-form-field-underline {
+    display: none;
+  }
+}
+
+.cdk-overlay-pane {
+  margin-top: -7px !important;
+  position: absolute;
+  margin-left: -14px;
+  width: 424px !important;
+}
+
+.mat-autocomplete-panel:not([class*="mat-elevation-z"]) {
+  background: #f1f1f1;
+  margin-top: -4px;
+  border-bottom-left-radius: 18px;
+  border-bottom-right-radius: 18px;
+  box-shadow: 0px 55px 56px 0px rgba(#44abc3, 0.5);
+  border-top: 16px solid #fff;
+}
+
+.mat-option {
+  font-size: 13px;
+  padding: 0 25px !important;
+  line-height: 40px !important;
+  height: 41px !important;
+  color: #0061ff !important;
+
+  .mat-option-text {
+    border-bottom: 1px solid #cacaca;
+    font-size: 13px;
+  }
+
+  &:last-child {
+    .mat-option-text {
+      border: none;
+    }
+  }
+}
+
+// Table
+table.mat-table {
+  width: 100%;
+  max-width: 1312px;
+  margin: 0 auto;
+  border: 0;
+  border-collapse: separate;
+  border-spacing: 0 1px !important;
+  //border-collapse: collapse;
+}
+
+table.product-grid {
+  background: transparent;
+
+  .mat-header-cell {
+    border: 0;
+    padding: 16px;
+    font-size: 13px;
+    color: $grey-color;
+  }
+
+  .mat-row {
+    background-color: #ffffff;
+    padding: 1rem;
+    &.highlighted {
+      // border: 1px solid #0061ff;
+      //box-shadow: 0 0 6px 0 #63a0ed;
+      .mat-cell:first-child::before {
+        background: #0061ff;
+        border-radius: 10px 0 0 10px;
+        content: "";
+        height: 100%;
+        left: -2px;
+        position: absolute;
+        top: 0;
+        width: 12px;
+        transition: all 0.1s ease-in-out;
+      }
+
+      .mat-cell:first-child {
+        transition: all 0.1s ease-in-out;
+        border: 2px solid #0061ff;
+        border-right: none;
+      }
+
+      .mat-cell:not(:first-child) {
+        transition: all 0.1s ease-in-out;
+        border-top: 2px solid #0061ff;
+        border-bottom: 2px solid #0061ff;
+      }
+
+      .mat-cell:last-child {
+        border-right: 2px solid #0061ff;
+        transition: all 0.1s ease-in-out;
+      }
+    }
+    .mat-cell {
+      border: 0;
+      padding: 16px;
+      position: relative;
+      &:first-child {
+        border-radius: 10px 0 0 10px;
+      }
+      &:last-child {
+        border-radius: 0 10px 10px 0;
+      }
+
+      .product-grid-radio {
+        font-size: 13px;
+
+        small {
+          color: #adadad;
+        }
+      }
+      &.stock-zero {
+        color: red;
+      }
+    }
+  }
+
+  .mat-cell {
+    font-size: 13px;
+
+    .mat-checkbox-checked.mat-primary {
+      .mat-checkbox-background {
+        background-color: #0061ff !important;
+      }
+    }
+
+    .mat-checkbox-inner-container {
+      height: 12px;
+      width: 12px;
+
+      .mat-checkbox-frame {
+        height: 12px;
+        width: 12px;
+        border-width: 1px;
+        border-color: #adadad;
+      }
+
+      .mat-checkbox-checkmark {
+        display: none;
+      }
+    }
+
+    .mat-radio-container,
+    .mat-radio-outer-circle,
+    .mat-radio-inner-circle {
+      width: 10px;
+      height: 10px;
+
+      .mat-ripple {
+        display: none;
+      }
+    }
+
+    .mat-radio-inner-circle,
+    .mat-radio-outer-circle {
+      border-width: 1px;
+      height: 12px;
+      width: 12px;
+    }
+
+    .radio-group-option {
+      display: flex;
+      height: 73px;
+      flex-direction: column;
+
+      .mat-radio-label-content {
+        margin-top: 14px;
+        text-align: left;
+      }
+    }
+
+    // mover para o componente... details box
+    .medical-agreement-select {
+      .toggle-details-button {
+        font-size: 11px;
+        border: 0;
+        color: #567ebf;
+        background: transparent url(./assets/images/button-arrow.svg) no-repeat right;
+        background-size: 10px;
+        padding-right: 15px;
+      }
+    }
+
+    .mat-radio-label {
+      margin-bottom: 0;
+
+      .mat-radio-label-content {
+        line-height: 1;
+      }
+    }
+
+    &.mat-column- {
+      &name {
+        font-size: 14px;
+        max-width: 150px;
+        text-transform: uppercase;
+        font-family: $font-bold;
+      }
+
+      &type {
+        max-width: 50px;
+        padding: 8px;
+      }
+
+      &vsPrice {
+        .mat-radio-label-content {
+          margin-top: 14px;
+        }
+      }
+
+      &progressiveDiscount {
+        .radio-group-option.progressive-discount {
+          .mat-radio-label-content {
+            margin-top: 0;
+            text-align: left;
+          }
+
+          .price {
+            margin-top: 6px;
+          }
+        }
+      }
+
+      &select {
+        max-width: 10px;
+      }
+
+      &prescription {
+        max-width: 40px;
+        line-height: 1.2;
+        font-size: 13px;
+
+        .prescription-color {
+          background: #fff;
+          border: solid 0.5px #adadad;
+          display: block;
+          height: 4px;
+          width: 38px;
+          margin: 0 auto;
+          border-radius: 3px;
+          margin-top: 5px;
+
+          &.Azul {
+            background-color: #81c7d7;
+            border: 0;
+          }
+
+          &.Amarela {
+            background-color: #f2d336;
+            border: 0;
+          }
+        }
+      }
+    }
+
+    .mat-checkbox-layout {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.mat-checkbox {
+  &.mat-checkbox-disabled .mat-checkbox-inner-container {
+    background: rgba(#adadad, 0.3);
+    border-radius: 2px;
+  }
+}
+.mat-radio-button {
+  &.mat-radio-disabled .mat-radio-outer-circle {
+    background: rgba(#adadad, 0.3);
+  }
+  &.best-price .mat-radio-label {
+    color: #00b157;
+    font-family: $font-bold;
+    .percent {
+      font-size: 11px;
+      font-family: $font;
+    }
+  }
+}
+
+// Component table cells
+.product-type-icon {
+  background: #adadad;
+  color: #ffffff;
+  height: 50px;
+  width: 50px;
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  font-family: $font-bold;
+}
+
+// // Counter
+// .quantity-counter {
+//   display: flex;
+//   margin: 0 auto;
+//   flex-direction: column;
+//   width: 32px;
+
+//   .value {
+//     background: #fff;
+//     border: 1px solid #adadad;
+//     color: #adadad;
+//     border-radius: 3px;
+//     margin: 2px 0;
+//     padding: 4px;
+//     text-align: center;
+//     -moz-appearance: textfield;
+//     &::-webkit-outer-spin-button,
+//     &::-webkit-inner-spin-button {
+//       -webkit-appearance: none;
+//       margin: 0;
+//     }
+//     &[disabled] {
+//       background: rgba(#adadad, 0.3);
+//     }
+//   }
+
+//   .increment,
+//   .decrement {
+//     background: transparent url(./assets/images/button-arrow.svg) no-repeat center;
+//     border: 0;
+//     border-radius: 3px;
+//     cursor: pointer;
+//     filter: opacity(0.7);
+//     height: 20px;
+//     width: 100%;
+//     transition: background 0.2s ease-in-out;
+
+//     &:hover,
+//     &:focus {
+//       background-color: rgba(#000, 0.1);
+//     }
+//   }
+
+//   .increment {
+//     transform: rotate(180deg);
+//   }
+// }

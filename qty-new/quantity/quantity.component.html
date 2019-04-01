@@ -1,0 +1,16 @@
+<div class="quantity-counter">
+  <button [disabled]="isDisabled" (click)="incrementQuantity()" class="increment"></button>
+  <input
+    value="{{ quantity }}"
+    disabled="{{ isDisabled }}"
+    matInput
+    class="value"
+    type="number"
+    min="0"
+    max="99"
+    autocomplete="off"
+    [textMask]="{mask: maskQuantity, guide: false}"
+    (keyup)="updateQuantityInput($event.target.value)"
+  >
+  <button [disabled]="isDisabled" (click)="decrementQuantity()" class="decrement"></button>
+</div>

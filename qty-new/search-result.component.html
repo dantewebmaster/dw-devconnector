@@ -1,0 +1,245 @@
+<app-header></app-header>
+<div class="page">
+  <div class="wrap-components">
+    <div class="component search">
+      <app-search isResult="true" searchTerm="{{ searchTerm$.text }}"></app-search>
+    </div>
+    <div class="component">
+      <app-stepper [data]="steps"></app-stepper>
+    </div>
+    <div class="component filters">
+      <app-filter></app-filter>
+      <app-mini-cart itemsCart="{{ itemsCart }}"></app-mini-cart>
+    </div>
+  </div>
+
+  <app-error-card title="Não foi encontrado nenhum produto/medicamento." *ngIf="errors$ | async" description="Verifique se o campo da busca foi preeenchido
+    corretamente. Caso contrário, solicite como
+    falteiro ou fale com seu superior.">
+  </app-error-card>
+
+  <!-- <ng-template #loading>
+    <div class="loader-container">
+      <mat-spinner color="primary" class="loader"></mat-spinner>
+    </div>
+  </ng-template> -->
+
+  <ng-container *ngIf="dataSource.data?.length; else loading">
+    <div class="product-grid-container">
+      <table class="product-grid" mat-table [dataSource]="dataSource" *ngIf="dataSource.data.length > 0">
+        <ng-container matColumnDef="select">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let row">
+            <mat-checkbox
+              (click)="$event.stopPropagation()"
+              (change)="$event ? selectionChanged($event, row) : null"
+              [checked]="selection.isSelected(row)" color="primary"
+              disabled="{{ (row.stock === '0' || selectedProducts?.length >= 5) && !selection.isSelected(row) }}">
+            </mat-checkbox>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="type">
+          <th class="text-center" mat-header-cell *matHeaderCellDef>Tipo</th>
+          <td mat-cell *matCellDef="let product">
+            <div class="product-type-icon">{{ product.typification }}</div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Nome</th>
+          <td mat-cell *matCellDef="let product">{{ product.shortName }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="dosage">
+          <th class="text-center" mat-header-cell *matHeaderCellDef>Dosagem</th>
+          <td class="text-center" mat-cell *matCellDef="let product">{{ product.concentration }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="stock">
+          <th class="text-center" mat-header-cell *matHeaderCellDef>Estoque</th>
+          <td class="text-center" [ngClass]="{'stock-zero': product.stock === '0'}" mat-cell *matCellDef="let product">
+            {{ product.stock }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="basePrice">
+          <th mat-header-cell *matHeaderCellDef>Preço Base</th>
+          <td mat-cell *matCellDef="let product">
+            <mat-radio-group name="{{ 'selectedPrice-' + product.sku }}">
+              <mat-radio-button value="product.basePrice"
+                disabled="{{ (product.stock === '0' || selectedProducts?.length >= 5) && !selection.isSelected(product) }}"
+                checked="{{ selection.isSelected(product) && product.selectedPrice === product.basePrice }}"
+                (change)="updateValue(product.basePrice, product, 'selectedPrice')"
+                color="primary"
+                class="product-grid-radio"
+                [ngClass]="{'best-price': product.bestPrice === 'basePrice'}">
+                {{ product.basePrice | currency: 'BRL' || 'Não há' }}
+              </mat-radio-button>
+            </mat-radio-group>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="vsPrice">
+          <th class="text-center" mat-header-cell *matHeaderCellDef>Viva Saúde</th>
+          <td class="text-center" mat-cell *matCellDef="let product">
+            <div *ngIf="product.fidelizationPrice; else notApplicable">
+              <mat-radio-group name="{{ 'selectedPrice-' + product.sku }}">
+                <mat-radio-button
+                  value="{{ product.fidelizationPrice.value }}"
+                  disabled="{{ (product.stock === '0' || selectedProducts?.length >= 5) && !selection.isSelected(product) }}"
+                  checked="{{ selection.isSelected(product) && product.selectedPrice === product.fidelizationPrice.value }}"
+                  (change)="updateValue(product.fidelizationPrice.value, product, 'selectedPrice')" color="primary"
+                  [ngClass]="{'best-price': product.bestPrice === 'fidelizationPrice'}"
+                  class="product-grid-radio">
+                  {{ product.fidelizationPrice.value | currency: 'BRL' }}
+                  <div class="text-left">
+                    <small class="percent"
+                      *ngIf="product.fidelizationPrice">(-{{ product.fidelizationPrice.percent }}%)</small>
+                  </div>
+                </mat-radio-button>
+              </mat-radio-group>
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="medicalAgreement">
+          <th class="text-center" mat-header-cell *matHeaderCellDef>Convênio</th>
+          <td class="text-center" mat-cell *matCellDef="let product">
+            <div *ngIf="product.convenioPrice; else notApplicable">
+              <div class="radio-group-option text-center">
+                <div class="medical-agreement-select">
+                  <app-details-box
+                    [covenantList]="product.convenioPrice.convenios"
+                    [selectedName]="product.convenioPrice.description"></app-details-box>
+                </div>
+                <mat-radio-group name="{{ 'selectedPrice-' + product.sku }}">
+                  <mat-radio-button
+                    value="{{ product.convenioPrice.value }}"
+                    disabled="{{ (product.stock === '0' || selectedProducts?.length >= 5) && !selection.isSelected(product) }}"
+                    checked="{{ selection.isSelected(product) && product.selectedPrice === product.convenioPrice.value }}"
+                    (change)="updateValue(product.convenioPrice.value, product, 'selectedPrice')"
+                    color="primary"
+                    [ngClass]="{'best-price': product.bestPrice === 'convenioPrice'}"
+                    class="product-grid-radio">
+                    {{ product.convenioPrice.value | currency: 'BRL' }}
+                    <div class="text-left">
+                      <small class="percent"
+                        *ngIf="product.convenioPrice">(-{{ product.convenioPrice.percent }}%)</small>
+                    </div>
+                  </mat-radio-button>
+                </mat-radio-group>
+              </div>
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="pbm">
+          <th class="text-center" mat-header-cell *matHeaderCellDef>PBM</th>
+          <td class="text-center grouped-options" mat-cell *matCellDef="let product">
+            <div *ngIf="product.pbmPrice; else notApplicable">
+              <div class="radio-group-option text-center">
+                <div class="medical-agreement-select">
+                   <app-details-box
+                    [covenantList]="product.pbmPrice.pbmList"
+                    [selectedName]="product.pbmPrice.description"></app-details-box>
+                </div>
+                <mat-radio-group name="{{ 'selectedPrice-' + product.sku }}">
+                  <mat-radio-button value="{{ product.pbmPrice.value }}"
+                    disabled="{{ (product.stock === '0' || selectedProducts?.length >= 5) && !selection.isSelected(product) }}"
+                    checked="{{ selection.isSelected(product) && product.selectedPrice === product.pbmPrice.value }}"
+                    (change)="updateValue(product.pbmPrice.value, product, 'selectedPrice')"
+                    color="primary"
+                    [ngClass]="{'best-price': product.bestPrice === 'pbmPrice'}"
+                    class="product-grid-radio">
+                    {{ product.pbmPrice.value | currency: 'BRL' }}
+                    <div>
+                      <small class="percent" *ngIf="product.pbmPrice">(-{{ product.pbmPrice.percent }}%)</small>
+                    </div>
+                  </mat-radio-button>
+                </mat-radio-group>
+              </div>
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="popFarm">
+          <th class="text-center" mat-header-cell *matHeaderCellDef>Farm. Popular</th>
+          <td class="text-center" mat-cell *matCellDef="let product">{{ product.popular ? 'Possui' : 'Não possui' }}
+          </td>
+        </ng-container>
+
+        <!-- @TODO: Populate with BFF -->
+        <ng-container matColumnDef="progressiveDiscount">
+          <th class="text-center" mat-header-cell *matHeaderCellDef>D.P</th>
+          <td class="text-center" mat-cell *matCellDef="let product">
+            <div *ngIf="product.pdPrice; else notApplicable"
+              class="radio-group-option progressive-discount text-center">
+              <mat-radio-button disabled="{{ product.stock === '0' }}" color="primary" class="product-grid-radio">
+                <div class="price">
+                  <div>{{ product.pdPrice.first }}</div>
+                  <div>
+                    <small>(0 unid)</small>
+                  </div>
+                </div>
+                <div class="price">
+                  <div>{{ product.pdPrice.last }}</div>
+                  <div>
+                    <small>(0 unid)</small>
+                  </div>
+                </div>
+              </mat-radio-button>
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="quantity">
+          <th class="text-center" mat-header-cell *matHeaderCellDef>Quantidade</th>
+          <td class="text-center" mat-cell *matCellDef="let product">
+            <app-quantity
+              [isDisabled]="(product.stock === '0' || selectedProducts?.length >= 5) && !selection.isSelected(product)"
+              [resetQuantity]="!selection.isSelected(product)"
+              (updateQuantity)="updateValue($event, product, 'quantity')"
+            ></app-quantity>
+            <!-- <div class="quantity-counter">
+              <button (click)="incrementValue(product); selection.select(product)" class="increment"></button>
+              <input
+                #pQuantity
+                value="{{ selection.isSelected(product) && product.quantity ? product.quantity : 0 }}"
+                disabled="{{ !selection.isSelected(product) }}"
+                matInput
+                class="value"
+                type="number"
+                min="0"
+                max="99"
+                autocomplete="off"
+                [textMask]="{mask: maskQuantity, guide: false}"
+                (keyup)="updateProductQuantity($event.target.value, product)"
+              >
+              <button (click)="decrementValue(product)" class="decrement"></button>
+            </div> -->
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="prescription">
+          <th class="text-center" mat-header-cell *matHeaderCellDef> Receita </th>
+          <td class="text-center" mat-cell *matCellDef="let product">
+            {{ product.prescription || 'Não há' }}
+            <span *ngIf="product.prescription" class="prescription-color" [ngClass]="product.prescription"></span>
+          </td>
+        </ng-container>
+
+        <tr class="product-grid-header" mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="product-grid-item"
+          [ngClass]="{'highlighted': selection.isSelected(row) }"></tr>
+      </table>
+    </div>
+  </ng-container>
+
+</div>
+
+<ng-template #notApplicable>Não há</ng-template>
+
+<!-- <ng-container *ngIf="selectedProducts$ | async as selectedProducts"> -->
+  <app-subtotal *ngIf="selectedProducts?.length > 0" [selectedProducts]="selectedProducts"
+    (removeItem)="removeProductFromSubtotal($event)" (addToCart)="addSelectedProductsToCart($event)"></app-subtotal>
+<!-- </ng-container> -->

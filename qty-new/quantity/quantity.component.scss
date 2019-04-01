@@ -1,0 +1,53 @@
+$disabled-color: rgba(#000, 0.2);
+// Counter
+.quantity-counter {
+  display: flex;
+  margin: 0 auto;
+  flex-direction: column;
+  width: 32px;
+
+  .value {
+    background: #fff;
+    border: 1px solid #adadad;
+    color: #adadad;
+    border-radius: 3px;
+    margin: 2px 0;
+    padding: 4px;
+    text-align: center;
+    -moz-appearance: textfield;
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    &[disabled] {
+      background: transparentize($disabled-color, 0.1);
+    }
+  }
+
+  .increment,
+  .decrement {
+    background: transparent url(../../../assets/images/button-arrow.svg) no-repeat center;
+    border: 0;
+    border-radius: 3px;
+    cursor: pointer;
+    filter: opacity(0.7);
+    height: 20px;
+    width: 100%;
+    transition: background 0.2s ease-in-out;
+
+    &:hover,
+    &:focus {
+      background-color: rgba(#000, 0.2);
+    }
+    &[disabled] {
+      background-color: $disabled-color;
+      border: 1px solid #adadad;
+      cursor: default;
+    }
+  }
+
+  .increment {
+    transform: rotate(180deg);
+  }
+}
