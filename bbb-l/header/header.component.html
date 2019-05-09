@@ -1,0 +1,33 @@
+<nav *ngIf="showHeader">
+  <div class="left">
+    <div class="logo">
+      <img src="../../../assets/images/header-logo-{{ selectedDrugstore?.siglaBandeira || 'dsp' | lowercase }}.svg"
+        alt="{{ selectedDrugstore?.descricao }}">
+
+      <button class="button-arrow"></button>
+    </div>
+    <div *ngIf="selectedDrugstore" class="store-name">{{ selectedDrugstore.descricao }}</div>
+    <div *ngIf="selectedCustomer" class="customer-info" [ngClass]="{'without-cpf': selectedCustomer?.cpf === '0'}">
+      <div class="name-cpf">
+        <span class="name">{{ selectedCustomer.fullName }}</span>
+        <span class="cpf" *ngIf="selectedCustomer.cpf !== '0'">{{ selectedCustomer.cpf }}</span>
+        <app-profile-status [status]="profileResponse$ | async"></app-profile-status>
+      </div>
+      <div class="customer-options">
+        <button *ngIf="selectedCustomer.cpf !== '0'" class="button-arrow"></button>
+      </div>
+      <button mat-flat-button color="primary" class="change-cpf-button" (click)="handleResetCustomer()"
+        routerLink="/selecao-cliente">
+        <img src="../../../assets/images/icon-change.svg">
+        <span *ngIf="selectedCustomer.cpf === '0'; else changeCpf">Informar CPF</span>
+        <ng-template #changeCpf>Trocar CPF</ng-template>
+      </button>
+    </div>
+  </div>
+
+  <div class="right">
+    <app-user-message-count [hidden]="!displayAlert" (click)="showMessageSlider()" [total]="userMessages?.length"
+      class="user-message-count">
+    </app-user-message-count>
+  </div>
+</nav>

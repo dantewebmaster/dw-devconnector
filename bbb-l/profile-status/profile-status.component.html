@@ -1,0 +1,8 @@
+<small class="loading-info">
+  <ng-container *ngIf="status === 'finished'">
+    <i class="finished-icon"></i>Convênios carregados
+  </ng-container>
+  <ng-container *ngIf="status === 'loading'">
+    <mat-spinner [diameter]="'14'"></mat-spinner>Carregando convênios...
+  </ng-container>
+</small>
